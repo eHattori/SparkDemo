@@ -2,7 +2,15 @@
 .classpath
 .project
 .settings/
+
+# VSCode
+.vscode
+.settings/
  
 # Maven
 log/
 target/
+
+#Logs and Locks
+*.log
+*.lck
