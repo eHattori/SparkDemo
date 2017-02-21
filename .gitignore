@@ -14,3 +14,9 @@ target/
 #Logs and Locks
 *.log
 *.lck
+
+# Gradle generate files #
+#########################
+.gradle
+build
+bin

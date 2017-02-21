@@ -1,0 +1,36 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.hattori'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+        
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    compile group: 'com.sparkjava', name: 'spark-core', version:'2.5.5'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version:'1.7.5'
+}
+
+//create a single Jar with all dependencies
+task buildJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+        	'Implementation-Version': version,
+        	'Main-Class': 'HelloWorld'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+task run(dependsOn:jar) << {    
+  javaexec { 
+    main="java -jar build/libs/SparkDemo-all-0.0.1-SNAPSHOT.jar";    
+  } 
+}
