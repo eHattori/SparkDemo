@@ -1,8 +1,10 @@
 package dependencyinjection;
 
-public interface Factory<T>{
+public abstract class Factory<T>{
 
-    public void link(Linker link);
+    protected void link(Linker link){
+        
+    }
 
     public abstract T get(Linker linker);
 

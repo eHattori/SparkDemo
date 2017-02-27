@@ -63,10 +63,6 @@ public class ObjectGraph {
 
         linker.install(Counter.class, SingletonFactory.of (new Factory<Counter>(){
 
-              @Override  public void link(Linker linker){
-        
-              }
-
               @Override public Counter get(Linker linker) {
                 return new Counter();   
               }

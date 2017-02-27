@@ -1,10 +1,6 @@
 package dependencyinjection;
 
-public final class ValueFactory<T> implements Factory<T> {
-
-      @Override  public void link(Linker linker){
-        
-    }
+public final class ValueFactory<T> extends Factory<T> {
 
     public static <T> Factory<T> of(T instance){
         return new ValueFactory<>(instance);
