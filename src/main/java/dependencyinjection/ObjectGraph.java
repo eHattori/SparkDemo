@@ -26,11 +26,17 @@ public class ObjectGraph {
 
        linker.install(VisitHandler.class, new Factory<VisitHandler>(){
 
+           Factory<Counter> counterFactory ;
+           Factory<Logger> loggerFactory;
+
+           @Override
+           public void link(Linker linker){
+                counterFactory = linker.factorFor(Counter.class);
+                loggerFactory = linker.factorFor(Logger.class);
+           }
+
            @Override
            public VisitHandler get(Linker linker){
-
-                Factory<Counter> counterFactory = linker.factorFor(Counter.class);
-                Factory<Logger> loggerFactory = linker.factorFor(Logger.class);
 
                 Counter counter = counterFactory.get(linker);
                 Logger logger = loggerFactory.get(linker);
@@ -40,21 +46,27 @@ public class ObjectGraph {
        });
        
 	    linker.install(Logger.class, new Factory<Logger>() {
-            @Override public Logger get(Linker linker) {
-                Factory<PrintStream> printStreamFactory = linker.factorFor(PrintStream.class);
+
+            Factory<PrintStream> printStreamFactory;
+
+           @Override
+           public void link(Linker linker){
+               printStreamFactory = linker.factorFor(PrintStream.class);
+           }
+
+            @Override public Logger get(Linker linker) {               
                     return new Logger(printStreamFactory.get(linker));
                 }
     	});
-
-    	linker.install(PrintStream.class, new Factory<PrintStream>() {
-                @Override public PrintStream get(Linker linker) {
-                    return System.out;
-                }
-    	});
-
+    	
   	    linker.install(PrintStream.class, ValueFactory.of (System.out));
 
         linker.install(Counter.class, SingletonFactory.of (new Factory<Counter>(){
+
+              @Override  public void link(Linker linker){
+        
+              }
+
               @Override public Counter get(Linker linker) {
                 return new Counter();   
               }

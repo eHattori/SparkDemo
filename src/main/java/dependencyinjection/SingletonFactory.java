@@ -2,6 +2,10 @@ package dependencyinjection;
 
 public class SingletonFactory<T> implements Factory<T> {
 
+     @Override  public void link(Linker linker){
+        
+    }
+
     public static <T> Factory<T> of(Factory<T> factory){
         return new SingletonFactory<>(factory);
     }

@@ -1,5 +1,10 @@
 package dependencyinjection;
 
 public interface Factory<T>{
-    T get(Linker linker);
+
+    public void link(Linker link);
+
+    public abstract T get(Linker linker);
+
+    
 }
