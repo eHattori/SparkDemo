@@ -18,30 +18,31 @@ public class Linker {
 
     public <T> Factory<T> factorFor(Class<T> key){
 
-        System.out.println("Get factory for " + key);
         Factory<?> factory = linkedFactories.get(key);
 
         if(factory == null){
-            System.out.println("Link factory for " + key);
-            factory = factories.get(key);
+            
+            factory = loadFactory(key);
             factory.link(this);
+            System.out.println("link " + key);
             linkedFactories.put(key, factory);
         }        
         return (Factory<T>) factories.get(key);
     }
 
     private <T> Factory<?> loadFactory(Class<T> key){
-
+        
         Factory<?> factory = factories.get(key);
         if(factory != null){
             return factory;
-        }
+        }       
 
         Constructor<T> contructor = findAtInjectConstructor(key);
 
         if(contructor != null){
-            factory = new ReflectiveFactory<>(contructor);
             
+            factory = new ReflectiveFactory<>(contructor);
+
             if(key.isAnnotationPresent(Singleton.class)){
                 factory = SingletonFactory.of(factory);
             }
