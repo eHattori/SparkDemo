@@ -24,48 +24,48 @@ public class ObjectGraph {
 
     private static void installFactories(Linker linker){
 
-       linker.install(VisitHandler.class, new Factory<VisitHandler>(){
+    //    linker.install(VisitHandler.class, new Factory<VisitHandler>(){
 
-           Factory<Counter> counterFactory ;
-           Factory<Logger> loggerFactory;
+    //        Factory<Counter> counterFactory ;
+    //        Factory<Logger> loggerFactory;
 
-           @Override
-           public void link(Linker linker){
-                counterFactory = linker.factorFor(Counter.class);
-                loggerFactory = linker.factorFor(Logger.class);
-           }
+    //        @Override
+    //        public void link(Linker linker){
+    //             counterFactory = linker.factorFor(Counter.class);
+    //             loggerFactory = linker.factorFor(Logger.class);
+    //        }
 
-           @Override
-           public VisitHandler get(Linker linker){
+    //        @Override
+    //        public VisitHandler get(Linker linker){
 
-                Counter counter = counterFactory.get(linker);
-                Logger logger = loggerFactory.get(linker);
+    //             Counter counter = counterFactory.get(linker);
+    //             Logger logger = loggerFactory.get(linker);
 
-                return new VisitHandler(counter, logger);
-           }
-       });
+    //             return new VisitHandler(counter, logger);
+    //        }
+    //    });
        
-	    linker.install(Logger.class, new Factory<Logger>() {
+	    // linker.install(Logger.class, new Factory<Logger>() {
 
-            Factory<PrintStream> printStreamFactory;
+        //     Factory<PrintStream> printStreamFactory;
 
-           @Override
-           public void link(Linker linker){
-               printStreamFactory = linker.factorFor(PrintStream.class);
-           }
+        //    @Override
+        //    public void link(Linker linker){
+        //        printStreamFactory = linker.factorFor(PrintStream.class);
+        //    }
 
-            @Override public Logger get(Linker linker) {               
-                    return new Logger(printStreamFactory.get(linker));
-                }
-    	});
+        //     @Override public Logger get(Linker linker) {               
+        //             return new Logger(printStreamFactory.get(linker));
+        //         }
+    	// });
     	
   	    linker.install(PrintStream.class, ValueFactory.of (System.out));
 
-        linker.install(Counter.class, SingletonFactory.of (new Factory<Counter>(){
+        // linker.install(Counter.class, SingletonFactory.of (new Factory<Counter>(){
 
-              @Override public Counter get(Linker linker) {
-                return new Counter();   
-              }
-          }));
+        //       @Override public Counter get(Linker linker) {
+        //         return new Counter();   
+        //       }
+        //   }));
     }
 }

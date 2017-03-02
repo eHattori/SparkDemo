@@ -1,5 +1,6 @@
 package dependencyinjection;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,40 @@ public class Linker {
             linkedFactories.put(key, factory);
         }        
         return (Factory<T>) factories.get(key);
+    }
+
+    private <T> Factory<?> loadFactory(Class<T> key){
+
+        Factory<?> factory = factories.get(key);
+        if(factory != null){
+            return factory;
+        }
+
+        Constructor<T> contructor = findAtInjectConstructor(key);
+
+        if(contructor != null){
+            factory = new ReflectiveFactory<>(contructor);
+            
+            if(key.isAnnotationPresent(Singleton.class)){
+                factory = SingletonFactory.of(factory);
+            }
+
+            return factory;
+        }
+
+        throw new IllegalStateException("No factory for " + key);
+    }
+
+
+    private <T> Constructor<T> findAtInjectConstructor(Class<T> type){
+        for(Constructor<?> constructor : type.getConstructors()){
+            if(constructor.isAnnotationPresent(Inject.class)){
+            	
+                return (Constructor<T>) constructor;
+            }
+        }
+
+        return null;
     }
 
 }

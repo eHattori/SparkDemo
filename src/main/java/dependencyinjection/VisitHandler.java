@@ -5,7 +5,7 @@ public class VisitHandler {
     private final Counter counter;
     private final Logger logger;
 
-    public VisitHandler(Counter counter, Logger logger){
+    @Inject public VisitHandler(Counter counter, Logger logger){
         this.counter = counter;
         this.logger = logger;
     }
