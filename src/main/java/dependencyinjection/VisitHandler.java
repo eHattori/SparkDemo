@@ -1,5 +1,7 @@
 package dependencyinjection;
 
+import javax.inject.Inject;
+
 public class VisitHandler {
 
     private final Counter counter;

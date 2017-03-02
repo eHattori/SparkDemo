@@ -20,4 +20,5 @@ repositories {
 dependencies {
     compile group: 'com.sparkjava', name: 'spark-core', version:'2.5.5'
     compile group: 'org.slf4j', name: 'slf4j-simple', version:'1.7.5'
+    compile group: 'javax.inject', name: 'javax.inject', version:'1'
 }

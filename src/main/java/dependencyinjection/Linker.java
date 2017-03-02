@@ -3,6 +3,9 @@ package dependencyinjection;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 
 public class Linker {
 
